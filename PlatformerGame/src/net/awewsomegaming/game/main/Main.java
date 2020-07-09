@@ -13,6 +13,8 @@ public class Main extends Canvas implements Runnable{
 	private Window w;
 	public void init() {
 		w = new Window(this,"Platformer",900,700,false);
+		this.setFocusable(true);
+		this.setFocusTraversalKeysEnabled(false);
 		gameLoop = new Thread(this);
 		gameLoop.run();
 	}
