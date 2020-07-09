@@ -22,9 +22,7 @@ public class Renderer extends JPanel{
 	public void init() {
 		this.setBackground(Color.BLACK);
 		try {
-			System.out.println("init");
-			//mapf = this.getClass().getResourceAsStream("res/map0.png"); //new File(this.getClass().getResource("res/map"+level+".png").toURI());
-			mapf = new File("G:\\git\\Platformer-Game-1\\PlatformerGame\\src\\net\\awewsomegaming\\game\\res\\map0.png");
+			mapf = new File(this.getClass().getResource("res/map0.png").toURI()); //new File(this.getClass().getResource("res/map"+level+".png").toURI());
 			map = ImageIO.read(mapf);
 		}catch (Exception e) {
 			
