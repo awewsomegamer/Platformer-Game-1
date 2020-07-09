@@ -49,11 +49,8 @@ public class Renderer extends JPanel{
 					green = pixel[1];
 					blue = pixel[2];
 					String rgb = String.valueOf(red+" "+green+" "+blue);
-					System.out.println(rgb);
-					if (rgb.equals("255 255 255")) {
-						Platform p = new Platform(g2,Color.BLUE,x,y,10,10);
-						platforms.add(p);
-					}
+					
+				
 				}
 			}
 			platforms.removeAll(platforms);
