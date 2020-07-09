@@ -11,9 +11,7 @@ import javax.swing.JPanel;
 public class Renderer extends JPanel{
 	private Graphics2D g2 = null;
 	private int level = 0;
-	public void init() {
-		
-	}
+	
 	public void render(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		this.g2 = g2;
