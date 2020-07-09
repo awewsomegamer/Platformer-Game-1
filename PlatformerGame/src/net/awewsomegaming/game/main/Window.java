@@ -14,6 +14,7 @@ public class Window extends JFrame{
 		this.setResizable(resizable);
 		this.setLocationRelativeTo(null);
 		this.setTitle(title);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(m);
 		this.setVisible(true);
 	}

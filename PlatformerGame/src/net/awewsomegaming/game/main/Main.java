@@ -5,12 +5,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import net.awewsomegaming.game.render.Renderer;
+
 public class Main extends Canvas implements Runnable{
 	private boolean running = false;
 	private boolean update = false;
 	private double frame_cap = 1.0/120.0;
 	private Thread gameLoop;
 	private Window w;
+	private Renderer renderer = new Renderer();
 	public void init() {
 		w = new Window(this,"Platformer",900,700,false);
 		this.setFocusable(true);
@@ -57,10 +60,11 @@ public class Main extends Canvas implements Runnable{
 			this.createBufferStrategy(3);
 			return;
 		}
-		
+
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 900, 700);
+		renderer.render(g);
 		
 		bs.show();
 		g.dispose();
