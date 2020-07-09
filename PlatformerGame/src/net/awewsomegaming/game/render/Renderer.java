@@ -40,6 +40,7 @@ public class Renderer extends JPanel{
 			return;
 		}
 		int pixel[];
+		int spaceMult = 25;
 		int cModel;
 		if (map.getColorModel().hasAlpha()) {
 			cModel = 4;
@@ -52,10 +53,10 @@ public class Renderer extends JPanel{
 				String rgb = String.valueOf(pixel[0]+" "+pixel[1]+" "+pixel[2]);
 				if (rgb.equals("0 0 0")) {
 					Platform p = new Platform(g2,Color.blue);
-					p.setX(x+10);
-					p.setY(y+10);
-					p.setWidth(10);
-					p.setHeight(10);
+					p.setX(x*spaceMult+50);
+					p.setY(y*spaceMult);
+					p.setWidth(15*spaceMult/10-spaceMult+5);
+					p.setHeight(15*spaceMult/10-spaceMult+5);
 					platforms.add(p);
 					for (Platform cp : platforms) {
 						cp.draw();
