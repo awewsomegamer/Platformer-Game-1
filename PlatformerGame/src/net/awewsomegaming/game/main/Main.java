@@ -24,6 +24,7 @@ public class Main extends Canvas implements Runnable{
 	
 	public void run() {
 		running = true;
+		renderer.init();
 		loop();
 	}
 	
@@ -64,6 +65,7 @@ public class Main extends Canvas implements Runnable{
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(Color.black);
 		g.fillRect(0, 0, 900, 700);
+		
 		renderer.render(g);
 		
 		bs.show();

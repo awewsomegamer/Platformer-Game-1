@@ -4,6 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import net.awewsomegaming.game.render.Renderer;
+
 public class Window extends JFrame{
 	public Window(Main m, String title, int width, int height, boolean resizable) {
 		Dimension size = new Dimension(width,height);
@@ -16,6 +18,7 @@ public class Window extends JFrame{
 		this.setTitle(title);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.add(m);
+		
 		this.setVisible(true);
 	}
 }
