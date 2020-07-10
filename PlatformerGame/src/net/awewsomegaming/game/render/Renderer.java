@@ -5,25 +5,30 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import net.awewsomegaming.game.render.entity.Player;
 import net.awewsomegaming.game.render.object.Platform;
 
 public class Renderer extends JPanel{
 	private Graphics2D g2 = null;
 	private int level = 0;
 	private ArrayList<Platform> platforms = new ArrayList<>();
+	private Player player;
 	private File mapf = null;
+	private File playerSpritesf = null;
 	private BufferedImage map = null;
+	private BufferedImage playerSprites = null;
 	public void init() {
 		this.setBackground(Color.BLACK);
 		try {
-			mapf = new File(this.getClass().getResource("res/map0.png").toURI()); //new File(this.getClass().getResource("res/map"+level+".png").toURI());
+			mapf = new File(this.getClass().getResource("res/map0.png").toURI());
 			map = ImageIO.read(mapf);
+			playerSpritesf = new File(this.getClass().getResource("res/playerSprites.png").toURI());
+			playerSprites = ImageIO.read(playerSpritesf);
 		}catch (Exception e) {
 			
 		}
@@ -67,6 +72,9 @@ public class Renderer extends JPanel{
 		platforms.removeAll(platforms);
 	}
 	public void renderPlayer() {
-		
+		if (player == null) {
+			player = new Player(g2);
+			
+		}
 	}
 }
