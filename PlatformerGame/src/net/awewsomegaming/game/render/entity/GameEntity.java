@@ -8,7 +8,6 @@ import javax.swing.JComponent;
 public class GameEntity extends JComponent{
 	private Graphics2D g2;
 	private BufferedImage sprite = null;
-
 	private int x,y,width,height;
 	
 	public GameEntity(Graphics2D g2) {

@@ -3,6 +3,7 @@ package net.awewsomegaming.game.main;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 
 import net.awewsomegaming.game.render.Renderer;
@@ -24,7 +25,7 @@ public class Main extends Canvas implements Runnable{
 	
 	public void run() {
 		running = true;
-		renderer.init();
+		renderer.init(this);
 		loop();
 	}
 	

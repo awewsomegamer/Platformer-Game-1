@@ -10,13 +10,18 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import net.awewsomegaming.game.main.Main;
 import net.awewsomegaming.game.render.entity.Player;
+import net.awewsomegaming.game.render.events.KeyEvents;
 import net.awewsomegaming.game.render.imageuUtil.LoadSprite;
 import net.awewsomegaming.game.render.object.Platform;
 
 public class Renderer extends JPanel{
 	private Graphics2D g2 = null;
 	private int level = 0;
+	private int playerSpeed = 2;
+	private int oldPlayerY = 0;
+	private int velu = 0;
 	private ArrayList<Platform> platforms = new ArrayList<>();
 	private Player player;
 	private File mapf = null;
@@ -25,8 +30,12 @@ public class Renderer extends JPanel{
 	private BufferedImage map = null;
 	private BufferedImage playerSprites = null;
 	private BufferedImage playerCSprite = null;
-	public void init() {
+	private boolean playerJumping = false;
+	private boolean getPlayerOldY = false;
+	private KeyEvents keyEvent = new KeyEvents();
+	public void init(Main m) {
 		this.setBackground(Color.BLACK);
+		m.addKeyListener(keyEvent);
 		try {
 			mapf = new File(this.getClass().getResource("res/map0.png").toURI());
 			map = ImageIO.read(mapf);
@@ -44,7 +53,30 @@ public class Renderer extends JPanel{
 		renderMap();
 		renderPlayer();
 	}
-	
+	private void Physics() {
+		// falling
+		if (player.getY() < 571 && playerJumping == false) {
+			player.setY(player.getY()+8);
+		}
+		
+		// jumping
+		if (playerJumping == true) {
+			if (getPlayerOldY == false) {
+				oldPlayerY = player.getY();
+				getPlayerOldY = true;
+			}
+			Thread jump = new Thread(new Runnable() {
+				public void run() {
+					player.setY(player.getY()-8);
+					velu++;
+					if (velu <= oldPlayerY-8) {
+						playerJumping = false;
+					}
+				}
+			});
+			jump.start();
+		}
+	}
 	public void renderPlayer() {
 		if (player == null) {
 			player = new Player(g2);
@@ -57,13 +89,22 @@ public class Renderer extends JPanel{
 			player = null;
 			player = new Player(g2);
 			player.setX(oldX);
-			player.setY(oldY);
+			player.setY(oldY); //572
 			player.setWidth(100);
 			player.setHeight(100);
 			this.add(player);
 		}
-		
-		//Movement checks
+		Physics();
+		if (keyEvent.keyA == true) {
+			player.setX(player.getX()-playerSpeed);
+		}
+		if (keyEvent.keyD == true) {
+			player.setX(player.getX()+playerSpeed);		
+		}
+		if (keyEvent.keySpace == true) {
+			playerJumping = true;
+			keyEvent.keySpace = false;
+		}
 		
 		player.setSprite(playerCSprite);
 		player.draw();
