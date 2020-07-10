@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import net.awewsomegaming.game.render.entity.Player;
+import net.awewsomegaming.game.render.imageuUtil.LoadSprite;
 import net.awewsomegaming.game.render.object.Platform;
 
 public class Renderer extends JPanel{
@@ -20,8 +21,10 @@ public class Renderer extends JPanel{
 	private Player player;
 	private File mapf = null;
 	private File playerSpritesf = null;
+	private LoadSprite spriteLoader = new LoadSprite();
 	private BufferedImage map = null;
 	private BufferedImage playerSprites = null;
+	private BufferedImage playerCSprite = null;
 	public void init() {
 		this.setBackground(Color.BLACK);
 		try {
@@ -29,6 +32,7 @@ public class Renderer extends JPanel{
 			map = ImageIO.read(mapf);
 			playerSpritesf = new File(this.getClass().getResource("res/playerSprites.png").toURI());
 			playerSprites = ImageIO.read(playerSpritesf);
+			playerCSprite = spriteLoader.loadSpriteSheetSquare(1, 1, playerSprites);
 		}catch (Exception e) {
 			
 		}
@@ -40,6 +44,31 @@ public class Renderer extends JPanel{
 		renderMap();
 		renderPlayer();
 	}
+	
+	public void renderPlayer() {
+		if (player == null) {
+			player = new Player(g2);
+			player.setWidth(100);
+			player.setHeight(100);
+			this.add(player);
+		}else {
+			int oldX = player.getX();
+			int oldY = player.getY();
+			player = null;
+			player = new Player(g2);
+			player.setX(oldX);
+			player.setY(oldY);
+			player.setWidth(100);
+			player.setHeight(100);
+			this.add(player);
+		}
+		
+		//Movement checks
+		
+		player.setSprite(playerCSprite);
+		player.draw();
+	}
+	
 	public void renderMap() {
 		if (map == null) {
 			return;
@@ -70,11 +99,5 @@ public class Renderer extends JPanel{
 			}
 		}
 		platforms.removeAll(platforms);
-	}
-	public void renderPlayer() {
-		if (player == null) {
-			player = new Player(g2);
-			
-		}
 	}
 }
