@@ -69,8 +69,15 @@ public class Renderer extends JPanel{
 				public void run() {
 					player.setY(player.getY()-8);
 					velu++;
-					if (velu <= oldPlayerY-8) {
+					if (velu >= 18) {
+						velu = 0;
 						playerJumping = false;
+						getPlayerOldY = false;
+					}
+					try {
+						Thread.sleep(1);
+					}catch (Exception e) {
+						
 					}
 				}
 			});
@@ -89,7 +96,7 @@ public class Renderer extends JPanel{
 			player = null;
 			player = new Player(g2);
 			player.setX(oldX);
-			player.setY(oldY); //572
+			player.setY(oldY);
 			player.setWidth(100);
 			player.setHeight(100);
 			this.add(player);
