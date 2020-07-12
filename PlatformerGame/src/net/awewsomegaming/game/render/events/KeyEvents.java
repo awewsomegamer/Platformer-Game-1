@@ -23,13 +23,13 @@ public class KeyEvents implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (keyA == true) {
+		if (e.getKeyCode() == KeyEvent.VK_A) {
 			keyA = false;
 		}
-		if (keyD == true) {
+		if (e.getKeyCode() == KeyEvent.VK_D) {
 			keyD = false;
 		}
-		if (keySpace == true) {
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			keySpace = false;
 		}
 	}

@@ -18,6 +18,7 @@ import net.awewsomegaming.game.render.object.Platform;
 
 public class Renderer extends JPanel{
 	private Graphics2D g2 = null;
+	private boolean thread_jump_started = false;
 	private int level = 0;
 	private int playerSpeed = 2;
 	private int oldPlayerY = 0;
@@ -33,6 +34,8 @@ public class Renderer extends JPanel{
 	private boolean playerJumping = false;
 	private boolean getPlayerOldY = false;
 	private KeyEvents keyEvent = new KeyEvents();
+	
+	
 	public void init(Main m) {
 		this.setBackground(Color.BLACK);
 		m.addKeyListener(keyEvent);
@@ -50,38 +53,30 @@ public class Renderer extends JPanel{
 		Graphics2D g2 = (Graphics2D) g;
 		this.g2 = g2;
 		
+		//player.setY(0);
+		
 		renderMap();
 		renderPlayer();
 	}
 	private void Physics() {
-		// falling
-		if (player.getY() < 571 && playerJumping == false) {
+		if (playerJumping == false && player.getY() < 570) {
 			player.setY(player.getY()+8);
 		}
-		
-		// jumping
-		if (playerJumping == true) {
-			if (getPlayerOldY == false) {
-				oldPlayerY = player.getY();
-				getPlayerOldY = true;
-			}
-			Thread jump = new Thread(new Runnable() {
-				public void run() {
-					player.setY(player.getY()-8);
-					velu++;
-					if (velu >= 18) {
-						velu = 0;
-						playerJumping = false;
-						getPlayerOldY = false;
-					}
-					try {
-						Thread.sleep(1);
-					}catch (Exception e) {
-						
-					}
+		if (velu >= 50) {
+			velu = 0;
+			thread_jump_started = false;
+		}
+		if (playerJumping == true && thread_jump_started == false) {
+			thread_jump_started = true;
+			while (velu <= 50) {
+				player.setY(player.getY()-8);
+				velu++;
+				try {
+					Thread.sleep(1);
+				}catch (Exception e) {
+					
 				}
-			});
-			jump.start();
+			}
 		}
 	}
 	public void renderPlayer() {
@@ -111,6 +106,8 @@ public class Renderer extends JPanel{
 		if (keyEvent.keySpace == true) {
 			playerJumping = true;
 			keyEvent.keySpace = false;
+		}else if (keyEvent.keySpace == false) {
+			playerJumping = false;
 		}
 		
 		player.setSprite(playerCSprite);
